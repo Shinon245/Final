@@ -136,6 +136,37 @@ public class BarTenderUI extends javax.swing.JFrame {
 
     
     
+   class Serve implements Runnable {
+   private String customer;
+   private Thread C;
+   
+   Serve( String name) {
+      customer = name;
+   }
+   
+   public void run() {
+      jTextArea1.setText(jTextArea1.getText() + "\n" + customer + " is drinking" );
+      try {
+         for(int i = 0; i < 6; i++) {
+            jTextArea1.setText(jTextArea1.getText() + "\n" + customer + " drunk level is: " + (i*2) + "\n");
+            // Let the thread sleep for a while.
+            Thread.sleep(5000);
+         }
+      }catch (InterruptedException e) {
+         jTextArea1.setText("Thread " +  customer + " interrupted.");
+   }
+      jTextArea1.setText(jTextArea1.getText() + "\n" + customer + " kicked out.");
+   }
+   
+   public void start () {
+      jTextArea1.setText(jTextArea1.getText() + "Served " +  customer );
+      if (C == null) {
+         C = new Thread (this, customer);
+         C.start ();
+      }
+   }
+}
+    
     
     
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

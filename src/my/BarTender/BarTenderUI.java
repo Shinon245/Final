@@ -147,7 +147,14 @@ public class BarTenderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        Serve C1 = new Serve(jTextField1.getText());
+        String data=jTextArea1.getText().trim();//read contents of text area into 'data'
+        if(!data.equals("")) 
+        {
+            C1.start();
+        }
+        else C1.start();
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

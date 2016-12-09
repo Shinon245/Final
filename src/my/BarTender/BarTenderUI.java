@@ -125,40 +125,11 @@ public class BarTenderUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public class Customer {
-        String name;
-        int custAge;
-        boolean drink;
-        
-        public Customer(String name, int age) {
-        }
-        
-        public String getName() {
-            return name;
-        }
-        
-        
-        public int getAge() {
-            return custAge;
-        }
-        
-        public void setDrink() {
-            if(getAge() >= 21) drink = true;
-            else drink = false;
-        }
-        
-        public boolean getDrink() {
-            return drink;
-        }
-           
-    }
-    
-   class Serve implements Runnable {
+   class ServeBeer implements Runnable {
    private String customer;
    private Thread C;
    
-   Serve( String name) {
+   ServeBeer(String name) {
       customer = name;
    }
    
@@ -187,6 +158,43 @@ public class BarTenderUI extends javax.swing.JFrame {
     
     
     
+    public class Customer {
+        String custname;
+        int custAge;
+        boolean drink;
+        
+        public Customer(String name, int age) {
+            custname = name;
+            custAge = age;
+        }
+        
+        public String getName() {
+            return custname;
+        }
+        
+        
+        public int getAge() {
+            return custAge;
+        }
+        
+        public void setDrink() {
+            if(getAge() >= 21) drink = true;
+            else drink = false;
+        }
+        
+        public boolean getDrink() {
+            return drink;
+        }
+        
+        public void serveDrink() {
+                ServeBeer C1 = new ServeBeer(getName());
+                C1.start();
+        }
+           
+    }
+    
+    
+    
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -196,19 +204,12 @@ public class BarTenderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String name = jTextField1.getText();
-        int age = Integer.parseInt(jTextField2.getText());
+        String name = jTextField1.getText().trim();
+        int age = Integer.parseInt(jTextField2.getText().trim());
+        
         
         Customer newCust = new Customer(name, age);
-        
-        Serve C1 = new Serve(name);
-        String data=jTextArea1.getText().trim();//read contents of text area into 'data'
-        if(!data.equals("")) 
-        {
-            C1.start();
-        }
-        else C1.start();
-        jTextField1.setText("");
+        newCust.serveDrink();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

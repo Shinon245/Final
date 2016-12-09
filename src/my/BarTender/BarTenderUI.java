@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package my.BarTender;
-
+import static kiss.API.*;
+import junit.framework.*;
+import static org.junit.Assert.assertEquals;
 /**
  *
  * @author Cameron
@@ -187,10 +189,12 @@ public class BarTenderUI extends javax.swing.JFrame {
         }
         
         public void serveDrink() {
+            assertEquals(custname, getName());
+            assertEquals(custAge, getAge());
             setDrink();
             if (getDrink() == true)
             {
-                ServeBeer C1 = new ServeBeer(getName());
+                ServeBeer C1 = new ServeBeer(custname);
                 C1.start(); 
             }
            else jTextArea1.setText(jTextArea1.getText() + "You can't serve " + custname + " beer!" + "\n");

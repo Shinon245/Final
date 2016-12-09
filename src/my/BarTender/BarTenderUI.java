@@ -131,16 +131,15 @@ public class BarTenderUI extends javax.swing.JFrame {
         int custAge;
         boolean drink;
         
-        public Customer(String name) {
-            System.out.println("Name chosen is: " + name);
+        public Customer(String name, int age) {
         }
         
-        public void setAge(int age) {
-            custAge = age;
+        public String getName() {
+            return name;
         }
+        
         
         public int getAge() {
-            System.out.println(name+"'s "+"age is: " + custAge);
             return custAge;
         }
         
@@ -199,6 +198,8 @@ public class BarTenderUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String name = jTextField1.getText();
         int age = Integer.parseInt(jTextField2.getText());
+        
+        Customer newCust = new Customer(name, age);
         
         Serve C1 = new Serve(name);
         String data=jTextArea1.getText().trim();//read contents of text area into 'data'

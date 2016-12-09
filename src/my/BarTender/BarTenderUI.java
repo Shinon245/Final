@@ -187,8 +187,13 @@ public class BarTenderUI extends javax.swing.JFrame {
         }
         
         public void serveDrink() {
+            setDrink();
+            if (getDrink() == true)
+            {
                 ServeBeer C1 = new ServeBeer(getName());
-                C1.start();
+                C1.start(); 
+            }
+           else jTextArea1.setText(jTextArea1.getText() + "You can't serve " + custname + " beer!" + "\n");
         }
            
     }

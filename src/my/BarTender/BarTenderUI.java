@@ -7,11 +7,16 @@ package my.BarTender;
 import static kiss.API.*;
 import junit.framework.*;
 import static org.junit.Assert.assertEquals;
+
 /**
  *
  * @author Cameron
  */
 public class BarTenderUI extends javax.swing.JFrame {
+        Boolean Kerryserved = false , Melissaserved = false, Steveserved = false;
+        Bartender Steve = new Bartender("Steve", 0);
+        Bartender Melissa = new Bartender("Melissa", 0);
+        Bartender Kerry = new Bartender("Kerry", 0);
 
     public BarTenderUI() {
         initComponents();
@@ -33,6 +38,7 @@ public class BarTenderUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,14 +92,17 @@ public class BarTenderUI extends javax.swing.JFrame {
 
         jLabel4.setText("Bartender");
 
+        jButton3.setText("Clear Log");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(jLabel3)
-                .addGap(81, 81, 81))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,12 +125,18 @@ public class BarTenderUI extends javax.swing.JFrame {
                                     .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButton1)
-                                .addGap(140, 140, 140))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(140, 140, 140)))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(90, 90, 90))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +161,9 @@ public class BarTenderUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -168,12 +185,24 @@ public class BarTenderUI extends javax.swing.JFrame {
          for(int i = 0; i < 4; i++) {
             jTextArea1.setText(jTextArea1.getText() + "\n" + customer + " drunk level is: " + (i*2) + "\n");
             // Let the thread sleep for a while.
-            Thread.sleep(100000);
+            Thread.sleep(10000);
          }
       }catch (InterruptedException e) {
          jTextArea1.setText("Thread " +  customer + " interrupted.");
    }
-      jTextArea1.setText(jTextArea1.getText() + "\n" + customer + " kicked out.");
+      jTextArea1.setText(jTextArea1.getText() + "\n" + customer + " kicked out." + "\n");
+      if (server == "Kerry")
+      {
+          Kerry.setServe(Kerry.getServe()-1); 
+      }
+      if (server == "Melissa")
+      {
+          Melissa.setServe(Melissa.getServe()-1); 
+      }
+      if (server == "Steve")
+      {
+          Steve.setServe(Steve.getServe()-1); 
+      }
    }
    
    public void start () {
@@ -204,8 +233,12 @@ public class BarTenderUI extends javax.swing.JFrame {
        }
        
        public void Serve(String custname, int custage) {
-            Customer newCust = new Customer(tendername, custname, custage);
-            newCust.serveDrink();
+            if (serving <= 3)
+            {
+                Customer newCust = new Customer(tendername, custname, custage);
+                newCust.serveDrink();
+            }
+            else jTextArea1.setText(jTextArea1.getText() + tendername + " can't serve any more customers!" + "\n"); 
        }
    }
     
@@ -253,6 +286,18 @@ public class BarTenderUI extends javax.swing.JFrame {
            else 
             {
                 jTextArea1.setText(jTextArea1.getText() + custname + " was served water!" + "\n");
+                if (servername == "Kerry")
+                 {
+                      Kerry.setServe(Kerry.getServe()-1); 
+                 }
+                 if (servername == "Melissa")
+                {
+                     Melissa.setServe(Melissa.getServe()-1); 
+                }
+                 if (servername == "Steve")
+                {
+                     Steve.setServe(Steve.getServe()-1); 
+                 }
                 assertEquals(getDrink(), false);
             }
         }
@@ -270,24 +315,47 @@ public class BarTenderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String tendername = jList1.getName();
+        String tendername = jList1.getSelectedValue();
         String name = jTextField1.getText().trim();
         int age = Integer.parseInt(jTextField2.getText().trim());
-        
-        if(tendername == "Kerry")
+        if(tendername == "Kerry" && Kerryserved == true)
             {
-                Bartender Kerry = new Bartender(tendername, 1);
+                Kerry.setServe(Kerry.getServe()+1);
+                Kerry.Serve(name, age);
             }
         
-        if(tendername == "Melissa")
+        if(tendername == "Melissa" && Melissaserved == true)
             {
-                Bartender Melissa = new Bartender(tendername, 1);
+                Melissa.setServe(Melissa.getServe()+1);
+                Melissa.Serve(name, age);
             }
                 
-        if(tendername == "Steve")
+        if(tendername == "Steve" && Steveserved == true)
             {
-                Bartender Steve = new Bartender(tendername, 1);
+                Steve.setServe(Steve.getServe()+1);
+                Steve.Serve(name, age);
             }
+        
+        if(tendername == "Kerry" && Kerryserved == false)
+            {
+                Kerry.Serve(name, age);
+                Kerry.setServe(1);
+                Kerryserved = true;
+            }
+        
+        if(tendername == "Melissa" && Melissaserved == false)
+            {
+                Melissa.Serve(name, age);
+                Melissa.setServe(1);
+                Melissaserved = true;
+            }
+                
+        if(tendername == "Steve" && Steveserved == false)
+            {
+                Steve.Serve(name, age);
+                Steve.setServe(1);
+                Steveserved = true;
+            } 
         
         
         
@@ -300,6 +368,10 @@ public class BarTenderUI extends javax.swing.JFrame {
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_jList1ValueChanged
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jTextArea1.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -331,6 +403,7 @@ public class BarTenderUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

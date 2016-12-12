@@ -239,7 +239,22 @@ public class BarTenderUI extends javax.swing.JFrame {
                 Customer newCust = new Customer(tendername, custname, custage);
                 newCust.serveDrink();
             }
-            else jTextArea1.setText(jTextArea1.getText() + tendername + " can't serve any more customers!" + "\n"); 
+            else 
+            {
+                jTextArea1.setText(jTextArea1.getText() + tendername + " can't serve any more customers!" + "\n");
+                if (tendername == "Kerry")
+            {
+                 Kerry.setServe(Kerry.getServe()-1); 
+            }
+                if (tendername == "Melissa")
+            {
+                 Melissa.setServe(Melissa.getServe()-1); 
+            }
+                if (tendername == "Steve")
+            {
+                 Steve.setServe(Steve.getServe()-1); 
+            }
+            } 
        }
    }
     

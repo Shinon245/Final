@@ -235,6 +235,7 @@ public class BarTenderUI extends javax.swing.JFrame {
        public void Serve(String custname, int custage) {
             if (serving <= 3)
             {
+                assertEquals((serving <= 3),true);
                 Customer newCust = new Customer(tendername, custname, custage);
                 newCust.serveDrink();
             }
@@ -286,17 +287,20 @@ public class BarTenderUI extends javax.swing.JFrame {
            else 
             {
                 jTextArea1.setText(jTextArea1.getText() + custname + " was served water!" + "\n");
-                if (servername == "Kerry")
+                if (servername == "Kerry" && Kerry.getServe() > 0)
                  {
                       Kerry.setServe(Kerry.getServe()-1); 
+                      assertEquals((Kerry.getServe() >= 0),true);
                  }
-                 if (servername == "Melissa")
+                 if (servername == "Melissa" && Melissa.getServe() > 0)
                 {
-                     Melissa.setServe(Melissa.getServe()-1); 
+                     Melissa.setServe(Melissa.getServe()-1);
+                     assertEquals((Melissa.getServe() >= 0),true);
                 }
-                 if (servername == "Steve")
+                 if (servername == "Steve" && Steve.getServe() > 0)
                 {
                      Steve.setServe(Steve.getServe()-1); 
+                     assertEquals((Steve.getServe() >= 0),true);
                  }
                 assertEquals(getDrink(), false);
             }
@@ -320,18 +324,21 @@ public class BarTenderUI extends javax.swing.JFrame {
         int age = Integer.parseInt(jTextField2.getText().trim());
         if(tendername == "Kerry" && Kerryserved == true)
             {
+                assertEquals(Kerryserved,true);
                 Kerry.setServe(Kerry.getServe()+1);
                 Kerry.Serve(name, age);
             }
         
         if(tendername == "Melissa" && Melissaserved == true)
             {
+                assertEquals(Melissaserved,true);
                 Melissa.setServe(Melissa.getServe()+1);
                 Melissa.Serve(name, age);
             }
                 
         if(tendername == "Steve" && Steveserved == true)
             {
+                assertEquals(Steveserved,true);
                 Steve.setServe(Steve.getServe()+1);
                 Steve.Serve(name, age);
             }
